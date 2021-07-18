@@ -23,8 +23,8 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        $name;
-        $sku;
+        $name = null;
+        $sku = null;
         if($this->method() == 'PUT')
         {
 

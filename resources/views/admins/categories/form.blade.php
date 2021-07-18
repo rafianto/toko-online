@@ -12,16 +12,16 @@
 
 				{{-- Card Header --}}
 					<div class="card-header card-header-border-bottom">
-								<h2 class="justify-content-end">
-											{{ $title }} Category
-								</h2>
+                        <h2 class="justify-content-end">
+                            {{ $title }} Category
+                        </h2>
 					</div>
 					{{-- End Of Card Header --}}
 
 					{{-- Caard Body --}}
-						<div class="card-body">
+                    <div class="card-body">
 							
-							@include('admins.partials.flash', ['$errors' => $errors])
+                    @include('admins.partials.flash', ['$errors' => $errors])
                     @if (!empty($category))
                         {!! Form::model($category, ['url' => ['admin/category', $category->id], 'method' => 'PUT']) !!}
                         {!! Form::hidden('id') !!}
@@ -30,15 +30,15 @@
                     @endif
                         <div class="form-group">
                             {!! Form::label('name', 'Name') !!}
-                            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'category name']) !!}
+                            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Category Name']) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('parent_id', 'Parent') !!}
                             {!! General::selectMultiLevel('parent_id', $categories, ['class' => 'js-example-basic-single form-control', 'selected' => !empty(old('parent_id')) ? old('parent_id') : (!empty($category['parent_id']) ? $category['parent_id'] : ''), 'placeholder' => '-- Choose Category --']) !!}
                         </div>
-                        <div class="form-footer pt-3 border-top clearfix">
-													<a href="{{ url('admin/category') }}" class="btn btn-secondary btn-danger float-right mr-3 ml-2">Back</a>
-                          <button type="submit" class="btn btn-primary btn-default float-right">Save</button>
+                        <div class="clearfix pt-3 form-footer border-top">
+                            <a href="{{ url('admin/category') }}" class="float-right ml-2 mr-3 btn btn-secondary btn-danger">Back</a>
+                            <button type="submit" class="float-right btn btn-primary btn-default">Save</button>
                         </div>
                     {!! Form::close() !!}
 

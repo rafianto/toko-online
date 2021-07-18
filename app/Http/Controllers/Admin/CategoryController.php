@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Http\Requests\CategoryRequest;
-use Str;
-use Session;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
@@ -101,7 +101,7 @@ class CategoryController extends Controller
         return response("ok");
     }
 
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
         $params = $request->except('_token');
         $params['slug'] = Str::slug($params['name']);

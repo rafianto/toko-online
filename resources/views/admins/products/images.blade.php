@@ -41,8 +41,8 @@
 										</tbody>
 								</table>
 						</div>
-						<div class="card-footer text-right">
-								<a href="{{ url('admin/products/'.$productId.'/add-image') }}" class="btn btn-primary">Add New</a>
+						<div class="text-right card-footer">
+								<a href="{{ url('admin/product/'.$productId.'/images/add-images') }}" class="btn btn-primary">Add New</a>
 						</div>
 				</div>  
 		</div>

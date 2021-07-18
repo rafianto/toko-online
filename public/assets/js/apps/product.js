@@ -11,16 +11,21 @@ function fetchDataSearch(page, query, size) {
             size +
             "&keyword=" +
             query,
-        success: function(data) {
+        success: function (data) {
             NProgress.done();
+            console.log(data);
             $("#product-search").html("");
             $("#product-search").html(data);
-        }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+        },
     });
 }
 
 // event searching
-$("#keyword").on("keyup", function(e) {
+$("#keyword").on("keyup", function (e) {
     let keyword = $(this).val();
     let page = $("#hidden_page").val();
     let size = $("#size").val();
@@ -30,7 +35,7 @@ $("#keyword").on("keyup", function(e) {
 });
 
 // event size
-$("#size").on("change", function(e) {
+$("#size").on("change", function (e) {
     let size = $(this).val();
     let keyword = $("#keyword").val();
     let page = $("#hidden_page").val();
@@ -40,11 +45,9 @@ $("#size").on("change", function(e) {
 });
 
 // Pagination Event
-$(document).on("click", ".pagination a", function(event) {
+$(document).on("click", ".pagination a", function (event) {
     event.preventDefault();
-    let page = $(this)
-        .attr("href")
-        .split("page=")[1];
+    let page = $(this).attr("href").split("page=")[1];
     $("#hidden_page").val(page);
 
     let keyword = $("#keyword").val();
@@ -53,9 +56,7 @@ $(document).on("click", ".pagination a", function(event) {
     NProgress.configure({ showSpinner: true });
     NProgress.start();
     $("li").removeClass("active");
-    $(this)
-        .parent()
-        .addClass("active");
+    $(this).parent().addClass("active");
     fetchDataSearch(page, keyword, size);
 });
 
@@ -64,11 +65,11 @@ function getAllData() {
     $.ajax({
         method: "GET",
         url: "/admin/product/search",
-        success: function(data) {
+        success: function (data) {
             NProgress.done();
             $("#product-search").html("");
             $("#product-search").html(data);
-        }
+        },
     });
 }
 
@@ -81,24 +82,24 @@ function deleteData(id) {
         data: {
             _method: "DELETE",
             _token: TOKEN,
-            id: id
+            id: id,
         },
-        success: function(result) {
+        success: function (result) {
             toastr.success("Data has been deleted");
             getAllData();
         },
-        error: function(jqXHR, error, errorThrown) {
+        error: function (jqXHR, error, errorThrown) {
             if (jqXHR.status && jqXHR.status == 400) {
                 toastr.error(jqXHR.responseText);
             } else {
                 toastr.error("Something Went Wrong");
             }
-        }
+        },
     });
 }
 
 // Delete Event
-$(document).on("click", "#btn-delete", function() {
+$(document).on("click", "#btn-delete", function () {
     let id = $(this).attr("data-id");
     Swal.fire({
         title: "Are you sure?",
@@ -106,8 +107,8 @@ $(document).on("click", "#btn-delete", function() {
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, keep it"
-    }).then(result => {
+        cancelButtonText: "No, keep it",
+    }).then((result) => {
         if (result.isConfirmed) {
             deleteData(id);
         }
@@ -117,12 +118,12 @@ $(document).on("click", "#btn-delete", function() {
 $(".js-example-basic-multiple").select2();
 $(".js-example-basic-single").select2();
 $("input[data-type='currency']").on({
-    keyup: function() {
+    keyup: function () {
         formatCurrency($(this));
     },
-    blur: function() {
+    blur: function () {
         formatCurrency($(this), "blur");
-    }
+    },
 });
 
 function formatNumber(n) {

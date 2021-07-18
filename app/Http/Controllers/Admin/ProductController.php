@@ -7,8 +7,9 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
-use Str;
-use DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+
 
 class ProductController extends Controller
 {
@@ -38,6 +39,7 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $this->data['products'] = $this->product->getAllData($request->input('keyword'), (int)$request->input('size'));
+        
         return view('admins.products.search', $this->data);
     }
 
@@ -63,17 +65,18 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ProductRequest $request)
-    {
+    {   
         $data = $request->except('_token');
         $data['slug'] = Str::slug($data['name']);
         $data['user_id'] = auth()->user()->id;
+        
         // Format Price
-        $data["price"] = explode("IDR ", $data['price']);
-        $data['price'] = explode(",", $data['price'][1]);
-        $data['price'] = implode("", $data['price']);
-        $data['price'] = explode(".", $data['price']);
-        $data["price"] = (int)$data['price'][0];
+        $format1 = explode(" ", $data['price']);
+        $format2 = explode(",", $format1[1]);
+        $format3 = implode("", $format2);
+        $data['price'] = (int) $format3;        
         // End Of Format Price
+
         $data['weight'] = (double)$data['weight'];
         $data['height'] = (double)$data['height'];
         $data['width'] = (double)$data['width'];
@@ -137,11 +140,12 @@ class ProductController extends Controller
         $idr = "IDR";
         if(preg_match("/$idr/i", $data["price"]))
         {
-            $data["price"] = explode("IDR ", $data['price']);
-            $data['price'] = explode(",", $data['price'][1]);
-            $data['price'] = implode("", $data['price']);
-            $data['price'] = explode(".", $data['price']);
-            $data["price"] = (int)$data['price'][0];
+            
+            $format1 = explode(" ", $data['price']);
+            $format2 = explode(",", $format1[1]);
+            $format3 = implode("", $format2);
+            $data['price'] = (int) $format3;   
+            
         } else {
             $data['price'] = (int)$data['price'];
         }
@@ -203,7 +207,7 @@ class ProductController extends Controller
      */
     public function addImages($productId)
     {
-
+        return 'hello world';
     }
 
     /**

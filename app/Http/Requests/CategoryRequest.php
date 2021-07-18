@@ -45,4 +45,17 @@ class CategoryRequest extends FormRequest
             'slug' => $slug,
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required' => 'Category name is required',
+        ];
+    }
+
 }

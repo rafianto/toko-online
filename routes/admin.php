@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('admin/login');
 });
+
 Auth::routes();
 
 
@@ -30,10 +32,17 @@ Route::group(['middleware' => 'auth'], function() {
     // Route for product
     Route::group(['prefix' => 'product'], function() {
         Route::get('/search', ['as' => 'search.product', 'uses' => 'ProductController@search']);
-        Route::get('{productId}/images', ['as' => 'images.product', 'uses' => 'ProductController@images']);
-        Route::get('{productId}/add-images', ['as' => 'add.images.product', 'uses' => 'ProductController@addImages']);
-        Route::post('images/{productId}', ['as' => 'post.images.product', 'uses' => 'ProductController@uploadImages']);
-        Route::delete('images/{productId}/delete', ['as' => 'delete.images.product', 'uses' => 'ProductController@destroyImages']);
+
+        // images route
+        Route::group(['prefix' => '{productId}/images'], function() {
+
+            Route::get('/', ['as' => 'images.product', 'uses' => 'ProductController@images']);
+            Route::get('add-images', ['as' => 'add.images.product', 'uses' => 'ProductController@addImages']);
+            Route::post('/', ['as' => 'post.images.product', 'uses' => 'ProductController@uploadImages']);
+            Route::delete('delete', ['as' => 'delete.images.product', 'uses' => 'ProductController@destroyImages']);
+
+        });
+
     });
     Route::resource('/product', 'ProductController');
 
