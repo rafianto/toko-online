@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\General\Category;
+use App\Models\Category;
 use App\Http\Requests\CategoryRequest;
 use Str;
 use Session;
@@ -68,13 +68,17 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         $params = $request->except('_token');
+        $params['name'] = htmlspecialchars(strtolower($params["name"]));
         $params['slug'] = Str::slug($params['name']);
         $params['parent_id'] = (int)$params['parent_id'];
 
-        if (Category::create($params)) {
-            Session::flash('success', 'Category has been saved');
+        $save = $this->category->create($params);
+        
+        if ($save) {
+            return redirect("admin/category")->with(['message' => 'Data has been saved']);
+        } else {
+            return redirect()->back()->with(['error' => 'Failed to saved data!']);
         }
-        return redirect("admin/category")->with(['message' => 'Data has been saved']);
     }
 
     public function show($id)
@@ -103,19 +107,14 @@ class CategoryController extends Controller
         $params['slug'] = Str::slug($params['name']);
         $params['parent_id'] = (int)$params['parent_id'];
 
-        $category = Category::findOrFail($id);
-        if ($category->update($params)) {
+        $category = $this->category->findOrFail($id);
+        $update = $category->update($params);
+        if ($update) {
             Session::flash('success', 'Category has been updated.');
             return redirect("admin/category")->with(['message' => 'Data has been saved']);
         } else {
             return redirect()->back()->with(["error" => "Failed to saved data"]);
         }
-
-        // if(!$save){
-        //     return redirect()->back()->with(["error" => "Failed to saved data"]);
-        // }
-
-        // return redirect("admin/category")->with(['message' => 'Data has been saved']);
 
     }
 

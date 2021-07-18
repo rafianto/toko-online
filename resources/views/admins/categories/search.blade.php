@@ -7,9 +7,9 @@
 {{-- Content Table --}}
 	<div  style="height: 400px !important;overflow:auto !important;margin-top:25px !important;">
 	
-		<div class="table-responsive">
+		<div class="table-responsive responsive-data-table">
 
-					<table id="categories-table" class="table  table-striped table-hover table-bordered">
+					<table id="categories-table" class="table  table-striped table-hover table-bordered dt-responsive nowrap">
 
 								{{-- Thead --}}
 											<thead class="text-center">
@@ -58,13 +58,13 @@
 																{{ $index + $categories->firstItem() }}
 															</td>
 															<td>
-																{{ $category->name }}
+																{{ ucwords($category->name) }}
 															</td>
 															<td>
 																{{ $category->slug }}
 															</td>
 															<td>
-																{{ $category->parent? $category->parent->name : ''}}
+																{{ $category->parent? ucwords($category->parent->name) : ''}}
 															</td>
 															<td>
 																{{ date('d-m-Y H:i:s', strtotime($category->created_at)) }}

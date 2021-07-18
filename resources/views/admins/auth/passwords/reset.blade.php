@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -62,4 +62,46 @@
         </div>
     </div>
 </div>
+@endsection --}}
+
+
+@extends('admins.auth.layouts.body')
+@section('title', 'Reset Password')
+@section('content')
+    <div class="card-body p-5">
+        <h4 class="text-dark mb-5">Reset Password</h4>
+        <form method="POST" action="{{ url('admin/password/reset') }}">
+            @csrf
+            <input type="hidden" name="token" value="{{ $token }}">
+            <div class="row">
+                <div class="form-group col-md-12 mb-4">
+                    <input id="email" type="email" class="form-control input-lg @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus aria-describedby="emailHelp" placeholder="Email">
+
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="form-group col-md-12 mb-4">
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Password">
+
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="form-group col-md-12 mb-4">
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Confirmation Password">
+                </div>
+
+                <button type="submit" class="btn btn-lg btn-primary btn-block mb-2">
+                    Reset Password
+                </button>
+            </div>
+        </form>
+    </div>
 @endsection

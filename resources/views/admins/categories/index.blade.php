@@ -41,7 +41,7 @@
                                                 {{-- End Of Search --}}
 
                                                 {{-- Filter size --}}
-                                                      {{-- <div class="offset-md-4 offset-lg-4 offeset-xl-4 col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                                                      <div class="offset-md-4 offset-lg-4 offeset-xl-4 col-sm-6 col-md-2 col-lg-2 col-xl-2">
                                                             <div class="form-group d-flex">
                                                                   <label for="keyword" class="justify-content-start pr-3">
                                                                         Size
@@ -53,7 +53,7 @@
                                                                         <option value="100">100</option>
                                                                   </select>
                                                             </div>
-                                                      </div> --}}
+                                                      </div>
                                                 {{-- End Of Filter size --}}
 
                                           </div>

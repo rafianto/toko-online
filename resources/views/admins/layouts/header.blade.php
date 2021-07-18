@@ -50,6 +50,9 @@
         {{-- select2 --}}
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+        {{-- Data Table Responsive --}}
+        <link href="{{ asset('assets/plugins/data-tables/responsive.datatables.min.css') }}" rel="stylesheet" />
+
         <!-- SLEEK CSS -->
         <link id="sleek-css" rel="stylesheet" href="{{ asset('assets/css/sleek.css') }}" />
 
@@ -66,6 +69,14 @@
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <script src="{{ asset('assets/plugins/nprogress/nprogress.js') }}"></script>
+        <style>
+            th{
+                background: white;
+                position: sticky;
+                top: 0; /* Don't forget this, required for the stickiness */
+                    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+            }
+        </style>
         @yield('css')
     </head>
     <body

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\General;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,11 +13,16 @@ class Category extends Model
     ];
 
     public function childs() {
-        return $this->hasMany('App\Models\General\Category', 'parent_id');
+        return $this->hasMany('App\Models\Category', 'parent_id');
     }
 
     public function parent() {
-        return $this->belongsTo('App\Models\General\Category', 'parent_id');
+        return $this->belongsTo('App\Models\Category', 'parent_id');
+    }
+
+    public function products()
+    {
+        return $this->belongToMany('App\Models\Product', 'product_categories');
     }
 
     /**
@@ -32,7 +37,7 @@ class Category extends Model
                     ->orWhere('created_at', 'like', '%' . $keyword . '%')
                     ->orWhere('updated_at', 'like', '%' . $keyword . '%')
                     ->orderBy('name', 'ASC')
-                    ->paginate($size);
+                    ->paginate((int) $size);
         return $categories;
     }
 }

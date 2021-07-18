@@ -45,7 +45,6 @@
 
         <script src="{{ asset('assets/js/sleek.bundle.js') }}"></script>
         <script>
-
             $(function(){
 
                 // declare token
@@ -99,9 +98,7 @@
                     toastr.warning("{{ session('warning') }}");
                 @endif
 
-                // select 2
-                $('.js-example-basic-single').select2();
-
+                
             });
         </script>
         @stack('script')
