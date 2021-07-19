@@ -45,6 +45,7 @@
 
         <script src="{{ asset('assets/js/sleek.bundle.js') }}"></script>
         <script>
+
             $(function(){
 
                 // declare token

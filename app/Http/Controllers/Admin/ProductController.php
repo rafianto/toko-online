@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\ProductImageRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ProductImage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
@@ -207,7 +209,63 @@ class ProductController extends Controller
      */
     public function addImages($productId)
     {
-        return 'hello world';
+        // jika product id tidak ada
+        if(!isset($productId) || empty($productId))
+        {
+            return redirect('admin/product');
+        }
+
+        // find one product by id
+        $product = $this->product->findOrFail($productId);
+
+        $this->data['productId'] = $product->id;
+        $this->data['product'] = $product;
+
+        return view('admins.products.image_form', $this->data);
+
+    }
+
+    public function uploadImages(ProductImageRequest $request, $productId)
+    {
+        $product = $this->product->findOrFail($productId);
+        
+        // cek ada file image gak
+        if($request->has('image'))
+        {
+            $images = $request->image;
+            $i = 0;
+            foreach($images as $image)
+            {
+                $i++;
+                $save = false;
+                // dd($image->storeAs());
+                // $imageData = $image->file('image');
+                $name = $product->slug . "($i)" . "_" . time();
+                $fileName = $name . '.' . $image->getClientOriginalExtension();
+
+                $folder = '/uploads/product_images/';
+                $filePath = $image->storeAs($folder, $fileName, 'public');
+                
+                $params = [
+                    "product_id" => $product->id,
+                    "path" => $filePath,
+                    "created_at" => date("Y-m-d H:i:s"),
+                    "updated_at" => date("Y-m-d H:i:s"),
+                ];
+
+                $save = DB::transaction(function() use($params) {
+                    ProductImage::create($params);
+                    return true;
+                });
+
+                if(!$save){
+                    break;
+                    return redirect()->back()->with(["error" => "Failed to saved image"]);
+                }
+            }
+
+        }
+        return redirect("admin/product")->with(['message' => 'Image has been saved']);
     }
 
     /**

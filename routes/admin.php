@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth'], function() {
 
             Route::get('/', ['as' => 'images.product', 'uses' => 'ProductController@images']);
             Route::get('add-images', ['as' => 'add.images.product', 'uses' => 'ProductController@addImages']);
-            Route::post('/', ['as' => 'post.images.product', 'uses' => 'ProductController@uploadImages']);
+            Route::post('/add-images', ['as' => 'post.images.product', 'uses' => 'ProductController@uploadImages']);
             Route::delete('delete', ['as' => 'delete.images.product', 'uses' => 'ProductController@destroyImages']);
 
         });
