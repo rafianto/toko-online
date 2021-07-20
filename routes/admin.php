@@ -5,12 +5,10 @@ use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Admin Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| Please use Prefix to your group route.
 |
 */
 
@@ -49,6 +47,15 @@ Route::group(['middleware' => 'auth'], function() {
 
         });
         Route::resource('/product', 'ProductController');
+
+        /**
+         * this route for attribute
+         */
+        // use resource for base template route
+        Route::resource('attribute', 'AttributeController');
+        Route::group(['prefix' => 'attribute'], function() {
+            
+        });
 
     });
 
