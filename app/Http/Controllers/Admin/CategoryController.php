@@ -75,7 +75,7 @@ class CategoryController extends Controller
         $save = $this->category->create($params);
         
         if ($save) {
-            return redirect("admin/category")->with(['message' => 'Data has been saved']);
+            return redirect("admin/master/category")->with(['message' => 'Data has been saved']);
         } else {
             return redirect()->back()->with(['error' => 'Failed to saved data!']);
         }
@@ -111,7 +111,7 @@ class CategoryController extends Controller
         $update = $category->update($params);
         if ($update) {
             Session::flash('success', 'Category has been updated.');
-            return redirect("admin/category")->with(['message' => 'Data has been saved']);
+            return redirect("admin/master/category")->with(['message' => 'Data has been saved']);
         } else {
             return redirect()->back()->with(["error" => "Failed to saved data"]);
         }

@@ -2,9 +2,6 @@
 @section('title', 'Product Images')
 @section('content')
 
-@php
-  dump($errors);  
-@endphp
 <div class="row">
     <div class="col-sm-4 col-md-4">
         @include('admins.products.product_menus')

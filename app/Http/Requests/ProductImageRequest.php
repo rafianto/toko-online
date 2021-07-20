@@ -37,6 +37,9 @@ class ProductImageRequest extends FormRequest
     public function messages()
     {
         return [
+            'image.required' => 'Please upload image',
+            'image.mimes' => 'Only jpeg,jpg and png images are allowed',
+            'image.max' => 'Sorry! Maximum allowed size for an image is 2MB',
             'image.*.required' => 'Please upload image',
             'image.*.mimes' => 'Only jpeg,jpg and png images are allowed',
             'image.*.max' => 'Sorry! Maximum allowed size for an image is 2MB',

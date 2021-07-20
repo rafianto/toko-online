@@ -175,7 +175,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // App Helpers Providers
         App\Providers\GeneralServiceProvider::class,
+        App\Providers\CollectionPaginateHelperSerive::class,
 
     ],
 

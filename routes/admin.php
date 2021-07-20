@@ -25,25 +25,31 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/dashboard', 'DashboardController@index');
 
-    // Route for Category
-    Route::get("/category/search", 'CategoryController@search');
-    Route::resource('/category', 'CategoryController');
+    // Master
+    Route::group(['prefix' => 'master'], function() {
 
-    // Route for product
-    Route::group(['prefix' => 'product'], function() {
-        Route::get('/search', ['as' => 'search.product', 'uses' => 'ProductController@search']);
+        // Route for Category
+        Route::get("/category/search", 'CategoryController@search');
+        Route::resource('/category', 'CategoryController');
 
-        // images route
-        Route::group(['prefix' => '{productId}/images'], function() {
+        // Route for product
+        Route::group(['prefix' => 'product'], function() {
+            Route::get('/search', ['as' => 'search.product', 'uses' => 'ProductController@search']);
 
-            Route::get('/', ['as' => 'images.product', 'uses' => 'ProductController@images']);
-            Route::get('add-images', ['as' => 'add.images.product', 'uses' => 'ProductController@addImages']);
-            Route::post('/add-images', ['as' => 'post.images.product', 'uses' => 'ProductController@uploadImages']);
-            Route::delete('delete', ['as' => 'delete.images.product', 'uses' => 'ProductController@destroyImages']);
+            // images route
+            Route::group(['prefix' => '{productId}/images'], function() {
+
+                Route::get('/', ['as' => 'images.product', 'uses' => 'ProductController@images']);
+                Route::get('add-images', ['as' => 'add.images.product', 'uses' => 'ProductController@addImages']);
+                Route::post('/add-images', ['as' => 'post.images.product', 'uses' => 'ProductController@uploadImages']);
+
+            });
+
+            Route::delete('images/{imageId}/delete', ['as' => 'delete.images.product', 'uses' => 'ProductController@destroyImages']);
 
         });
+        Route::resource('/product', 'ProductController');
 
     });
-    Route::resource('/product', 'ProductController');
 
 });

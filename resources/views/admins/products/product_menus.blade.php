@@ -9,11 +9,11 @@
 	{{-- Card Body --}}
 		<div class="card-body">
 			<nav class="nav flex-column">
-				<a href="{{ url('admin/product/' . $productId) }}" class="nav-link">
+				<a href="{{ url('admin/master/product/' . $productId) }}" class="nav-link">
 					Product Detail
 				</a>
 				<hr>
-				<a href="{{ url('admin/product/' . $productId . '/images') }}" class="nav-link">
+				<a href="{{ url('admin/master/product/' . $productId . '/images') }}" class="nav-link">
 					Product Images
 				</a>
 				<hr>

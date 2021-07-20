@@ -5,7 +5,7 @@ function fetchDataSearch(page, query, size) {
     $.ajax({
         method: "GET",
         url:
-            "/admin/product/search?page=" +
+            "/admin/master/product/search?page=" +
             page +
             "&size=" +
             size +
@@ -64,7 +64,7 @@ $(document).on("click", ".pagination a", function (event) {
 function getAllData() {
     $.ajax({
         method: "GET",
-        url: "/admin/product/search",
+        url: "/admin/master/product/search",
         success: function (data) {
             NProgress.done();
             $("#product-search").html("");

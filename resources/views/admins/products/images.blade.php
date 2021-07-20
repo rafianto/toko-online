@@ -20,16 +20,25 @@
                                 <th>Uploaded At</th>
                                 <th>Action</th>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody-images">
                             @forelse ($productImages as $image)
                                 <tr>    
-                                        <td>{{ $image->id }}</td>
-                                        <td><img src="{{ asset('storage/'.$image->small) }}" style="width:100px"/></td>
-                                        <td>{{ $image->created_at }}</td>
+                                        <td>{{ $loop->index + 1 }}</td>
+                                        <td><img src="{{ asset('storage/'.$image->path) }}" 
+                                                style="width:100px" class="rounded img-fluid img-thumbnail"
+                                                alt="{{ $image->path }}"
+                                            />
+                                        </td>
+                                        <td>{{ date('d/m/Y H:i:s', strtotime($image->created_at)) }}</td>
                                         <td>
-                                                {!! Form::open(['url' => 'admin/products/images/'. $image->id, 'class' => 'delete', 'style' => 'display:inline-block']) !!}
+                                                {!! Form::open(['url' => 'admin/master/product/images/'. $image->id . '/delete', 'class' => 'delete', 'style' => 'display:inline-block','id' => 'formDeleteImage']) !!}
                                                 {!! Form::hidden('_method', 'DELETE') !!}
-                                                {!! Form::submit('remove', ['class' => 'btn btn-danger btn-sm']) !!}
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Are you sure delete this image?');"
+                                                >
+                                                    Remove
+                                                </button>
+                                                {{-- {!! Form::submit('remove', ['class' => 'btn btn-danger btn-sm', 'onclick' => 'confirm("Are you sure to delete image?");']) !!} --}}
                                                 {!! Form::close() !!}
                                         </td>
                                 </tr>
@@ -40,9 +49,16 @@
                             @endforelse
                         </tbody>
                     </table>
+                    {{-- Pagination --}}
+                        <div class="my-3 row justify-content-end">
+                            <div>
+                                    {{ $productImages->links('vendor.pagination.bootstrap-4') }}
+                            </div>
+                        </div>
+                    {{-- End Of Pagination --}}
                 </div>
                 <div class="text-right card-footer">
-                    <a href="{{ url('admin/product/'.$productId.'/images/add-images') }}" class="btn btn-primary">Add New</a>
+                    <a href="{{ url('admin/master/product/'.$productId.'/images/add-images') }}" class="btn btn-primary">Add New</a>
                 </div>
             </div>  
 		</div>

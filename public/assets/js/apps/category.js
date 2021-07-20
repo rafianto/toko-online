@@ -8,22 +8,22 @@ function fetchDataSearch(page, query, size) {
     $.ajax({
         method: "GET",
         url:
-            "/admin/category/search?page=" +
+            "/admin/master/category/search?page=" +
             page +
             "&size=" +
             size +
             "&keyword=" +
             query,
-        success: function(data) {
+        success: function (data) {
             NProgress.done();
             $("#category-search").html("");
             $("#category-search").html(data);
-        }
+        },
     });
 }
 
 // event searching
-$("#keyword").on("keyup", function(e) {
+$("#keyword").on("keyup", function (e) {
     let keyword = $(this).val();
     let page = $("#hidden_page").val();
     let size = $("#size").val();
@@ -33,7 +33,7 @@ $("#keyword").on("keyup", function(e) {
 });
 
 // event size
-$("#size").on("change", function(e) {
+$("#size").on("change", function (e) {
     let size = $(this).val();
     let keyword = $("#keyword").val();
     let page = $("#hidden_page").val();
@@ -43,11 +43,9 @@ $("#size").on("change", function(e) {
 });
 
 // Pagination Event
-$(document).on("click", ".pagination a", function(event) {
+$(document).on("click", ".pagination a", function (event) {
     event.preventDefault();
-    let page = $(this)
-        .attr("href")
-        .split("page=")[1];
+    let page = $(this).attr("href").split("page=")[1];
     $("#hidden_page").val(page);
 
     let keyword = $("#keyword").val();
@@ -56,9 +54,7 @@ $(document).on("click", ".pagination a", function(event) {
     NProgress.configure({ showSpinner: true });
     NProgress.start();
     $("li").removeClass("active");
-    $(this)
-        .parent()
-        .addClass("active");
+    $(this).parent().addClass("active");
     fetchDataSearch(page, keyword, size);
 });
 
@@ -66,12 +62,12 @@ $(document).on("click", ".pagination a", function(event) {
 function getAllData() {
     $.ajax({
         method: "GET",
-        url: "/admin/category/search",
-        success: function(data) {
+        url: "/admin/master/category/search",
+        success: function (data) {
             NProgress.done();
             $("#category-search").html("");
             $("#category-search").html(data);
-        }
+        },
     });
 }
 
@@ -83,24 +79,24 @@ function deleteData(id) {
         data: {
             _method: "DELETE",
             _token: TOKEN,
-            id: id
+            id: id,
         },
-        success: function(result) {
+        success: function (result) {
             toastr.success("Data has been deleted");
             getAllData();
         },
-        error: function(jqXHR, error, errorThrown) {
+        error: function (jqXHR, error, errorThrown) {
             if (jqXHR.status && jqXHR.status == 400) {
                 toastr.error(jqXHR.responseText);
             } else {
                 toastr.error("Something Went Wrong");
             }
-        }
+        },
     });
 }
 
 // Delete Event
-$(document).on("click", "#btn-delete", function() {
+$(document).on("click", "#btn-delete", function () {
     let id = $(this).attr("data-id");
     Swal.fire({
         title: "Are you sure?",
@@ -108,8 +104,8 @@ $(document).on("click", "#btn-delete", function() {
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, keep it"
-    }).then(result => {
+        cancelButtonText: "No, keep it",
+    }).then((result) => {
         if (result.isConfirmed) {
             deleteData(id);
         }

@@ -11,6 +11,8 @@ use App\Models\Category;
 use App\Models\ProductImage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use App\Helpers\CollectionPaginate;
 
 
 class ProductController extends Controller
@@ -92,7 +94,7 @@ class ProductController extends Controller
         if(!$saved){
             return redirect()->back()->with(["error" => "Failed to saved data"]);
         } else {
-            return redirect("admin/product")->with(['message' => 'Data has been saved']);
+            return redirect("admin/master/product")->with(['message' => 'Data has been saved']);
         }
     }
 
@@ -105,7 +107,7 @@ class ProductController extends Controller
     public function show($id)
     {
         if(empty($id)){
-            return redirect('admin/product/create');
+            return redirect('admin/master/product/create');
         }
         $this->data['product'] = $this->product->findOrFail($id);
         $this->data['categories'] = $this->category->orderBy('name', 'ASC')->get()->toArray();
@@ -165,7 +167,7 @@ class ProductController extends Controller
         if(!$saved){
             return redirect()->back()->with(["error" => "Failed to saved data"]);
         } else {
-            return redirect("admin/product")->with(['message' => 'Data has been saved']);
+            return redirect("admin/master/product")->with(['message' => 'Data has been saved']);
         }
     }
 
@@ -194,11 +196,14 @@ class ProductController extends Controller
     public function images($productId)
     {
         if(empty($productId)){
-            return redirect('admin/product/create');
+            return redirect('admin/master/product/create');
         }
         $this->data['product'] = $this->product->findOrFail($productId);
         $this->data['productId'] = $this->data['product']->id;
-        $this->data['productImages'] = $this->data['product']->productImages;
+        $productImages = $this->data['product']->productImages;
+        // implement helper CollectionPaginate
+        $this->data['productImages'] = CollectionPaginate::paginate($productImages, 2);
+        
         return view('admins.products.images', $this->data);
     }
 
@@ -212,7 +217,7 @@ class ProductController extends Controller
         // jika product id tidak ada
         if(!isset($productId) || empty($productId))
         {
-            return redirect('admin/product');
+            return redirect('admin/master/product');
         }
 
         // find one product by id
@@ -243,7 +248,7 @@ class ProductController extends Controller
                 $name = $product->slug . "($i)" . "_" . time();
                 $fileName = $name . '.' . $image->getClientOriginalExtension();
 
-                $folder = '/uploads/product_images/';
+                $folder = '/uploads/product_images';
                 $filePath = $image->storeAs($folder, $fileName, 'public');
                 
                 $params = [
@@ -265,7 +270,7 @@ class ProductController extends Controller
             }
 
         }
-        return redirect("admin/product")->with(['message' => 'Image has been saved']);
+        return redirect("admin/master/product")->with(['message' => 'Image has been saved']);
     }
 
     /**
@@ -276,8 +281,17 @@ class ProductController extends Controller
     /**
      * @Author Rahmatulah Sidik
      */
-    public function destroyImages($productId)
+    public function destroyImages($imageId)
     {
-
+        $image = ProductImage::findOrFail($imageId);
+        // delete file
+        $basePath = Storage::delete("/public/$image->path");
+        
+        if($image->delete())
+        {
+            return redirect("admin/master/product")->with(['message' => 'Image has been deleted.']);
+        } else {
+            return redirect()->back()->with(["error" => "Failed to delete image"]);
+        }
     }
 }

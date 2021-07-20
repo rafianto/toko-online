@@ -23,10 +23,10 @@
 							
                     @include('admins.partials.flash', ['$errors' => $errors])
                     @if (!empty($category))
-                        {!! Form::model($category, ['url' => ['admin/category', $category->id], 'method' => 'PUT']) !!}
+                        {!! Form::model($category, ['url' => ['admin/master/category', $category->id], 'method' => 'PUT']) !!}
                         {!! Form::hidden('id') !!}
                     @else
-                        {!! Form::open(['url' => 'admin/category']) !!}
+                        {!! Form::open(['url' => 'admin/master/category']) !!}
                     @endif
                         <div class="form-group">
                             {!! Form::label('name', 'Name') !!}
@@ -37,7 +37,7 @@
                             {!! General::selectMultiLevel('parent_id', $categories, ['class' => 'js-example-basic-single form-control', 'selected' => !empty(old('parent_id')) ? old('parent_id') : (!empty($category['parent_id']) ? $category['parent_id'] : ''), 'placeholder' => '-- Choose Category --']) !!}
                         </div>
                         <div class="clearfix pt-3 form-footer border-top">
-                            <a href="{{ url('admin/category') }}" class="float-right ml-2 mr-3 btn btn-secondary btn-danger">Back</a>
+                            <a href="{{ url('admin/master/category') }}" class="float-right ml-2 mr-3 btn btn-secondary btn-danger">Back</a>
                             <button type="submit" class="float-right btn btn-primary btn-default">Save</button>
                         </div>
                     {!! Form::close() !!}

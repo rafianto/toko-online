@@ -1,5 +1,5 @@
 <div class="clearfix mb-3">
-		<a class="float-right btn btn-primary" href="{{ url('admin/category/create') }}" role="button">
+		<a class="float-right btn btn-primary" href="{{ url('admin/master/category/create') }}" role="button">
 					<i class="mdi mdi-plus"></i> Add New Category
 		</a>
 </div>
@@ -76,7 +76,7 @@
                                 @endif
                             </td>
                             <td class="text-center" width="15%">
-                                <a href="{{ url('admin/category') }}/{{ $category->id }}" id="btn-view" data-id="{{ $category->id }}" class="my-2 btn btn-warning" data-toggle="tooltip" data-placement="top" title="View Data">
+                                <a href="{{ url('admin/master/category') }}/{{ $category->id }}" id="btn-view" data-id="{{ $category->id }}" class="my-2 btn btn-warning" data-toggle="tooltip" data-placement="top" title="View Data">
                                     <i class="text-white mdi mdi-eye"></i>
                                 </a>
                                 <button id="btn-delete" data-id="{{ $category->id }}" class="my-2 btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete Data">

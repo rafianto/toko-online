@@ -35,10 +35,10 @@
 						<div class="card-body">
 
 								@if (!empty($product))
-											{!! Form::model($product, ['url' => ['admin/product', $product->id], 'method' => 'PUT']) !!}
+											{!! Form::model($product, ['url' => ['admin/master/product', $product->id], 'method' => 'PUT']) !!}
 											{!! Form::hidden('id') !!}
 								@else
-										{!! Form::open(['url' => 'admin/product', 'method' => 'POST']) !!}
+										{!! Form::open(['url' => 'admin/master/product', 'method' => 'POST']) !!}
 								@endif
 									@csrf	
 
@@ -167,9 +167,9 @@
 
 							</div>
 
-							<div class="form-footer pt-3 border-top clearfix">
-								<a href="{{ url('admin/product') }}" class="btn btn-secondary btn-danger float-right mr-3 ml-2">Back</a>
-								<button type="submit" class="btn btn-primary btn-default float-right">Save</button>
+							<div class="clearfix pt-3 form-footer border-top">
+								<a href="{{ url('admin/master/product') }}" class="float-right ml-2 mr-3 btn btn-secondary btn-danger">Back</a>
+								<button type="submit" class="float-right btn btn-primary btn-default">Save</button>
 							</div>
 
 						{!! Form::close() !!}

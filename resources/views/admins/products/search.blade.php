@@ -1,5 +1,5 @@
 <div class="clearfix mb-3">
-		<a class="btn btn-primary float-right" href="{{ url('admin/product/create') }}" role="button">
+		<a class="float-right btn btn-primary" href="{{ url('admin/master/product/create') }}" role="button">
 					<i class="mdi mdi-plus"></i> Add New Produt
 		</a>
 </div>
@@ -9,7 +9,7 @@
 	
 		<div class="table-responsive text-nowrap">
 
-					<table id="product-table" class="table  table-striped table-hover table-bordered">
+					<table id="product-table" class="table table-striped table-hover table-bordered">
 
 								{{-- Thead --}}
 											<thead class="text-center">
@@ -79,11 +79,11 @@
 																@endif
 															</td>
 															<td class="text-center" width="15%">
-																<a href="{{ url('admin/product') }}/{{ $product->id }}" id="btn-view" data-id="{{ $product->id }}" class="btn btn-warning my-2" data-toggle="tooltip" data-placement="top" title="View Data">
-																	<i class="mdi mdi-eye text-white"></i>
+																<a href="{{ url('admin/master/product') }}/{{ $product->id }}" id="btn-view" data-id="{{ $product->id }}" class="my-2 btn btn-warning" data-toggle="tooltip" data-placement="top" title="View Data">
+																	<i class="text-white mdi mdi-eye"></i>
 																</a>
-																<button id="btn-delete" data-id="{{ $product->id }}" class="btn btn-danger my-2" data-toggle="tooltip" data-placement="top" title="Delete Data">
-																	<i class="mdi mdi-delete text-white"></i>
+																<button id="btn-delete" data-id="{{ $product->id }}" class="my-2 btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete Data">
+																	<i class="text-white mdi mdi-delete"></i>
 																</button>
 															</td>
 														</tr>
@@ -105,7 +105,7 @@
 		Total Data:&nbsp;<b>{{ $products->total() }}</b>
 </span>
 {{-- Pagination --}}
-		<div class="row my-3 justify-content-end">
+		<div class="my-3 row justify-content-end">
 				<div>
 						{{ $products->links('vendor.pagination.bootstrap-4') }}
 				</div>
