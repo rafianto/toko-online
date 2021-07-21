@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\General;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -43,8 +44,9 @@ class CategoryController extends Controller
      * 
      */
     public function search(Request $request)
-    {
-        $categories = $this->category->getAllData($request->input('keyword'), (int)$request->input('size'));
+    {   
+        $filter = General::sanitasiInputString($request->input());
+        $categories = $this->category->getAllData($filter['keyword'], (int) $filter['size']);
         return view('admins.categories.search', compact('categories'))->render();
     }
 

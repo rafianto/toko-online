@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Helpers\CollectionPaginate;
-
+use App\Helpers\General;
 
 class ProductController extends Controller
 {
@@ -42,7 +42,9 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        $this->data['products'] = $this->product->getAllData($request->input('keyword'), (int)$request->input('size'));
+        $filter = General::sanitasiInputString($request->input());
+        $this->data['products'] = $this->product->getAllData($filter['keyword'], 
+            (int) $filter['size']);
         
         return view('admins.products.search', $this->data);
     }

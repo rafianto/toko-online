@@ -11,4 +11,12 @@ class AttributeOption extends Model
     protected $fillable = [
         'attribute_id', 'name'
     ];
+
+    /**
+     * relation to attribute many to one
+     */
+    public function attribute()
+    {
+        return $this->belongsTo('App\Models\Attribute');
+    }
 }

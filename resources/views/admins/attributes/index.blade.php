@@ -1,14 +1,14 @@
 @extends('admins.layouts.main')
-@section('title', "Product")
+@section('title', "Attribute")
 @section('content')
-	<div class="row">
+    <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="card card-default">
 
                 {{-- Card Header --}}
                 <div class="card-header card-header-border-bottom">
                     <h2 class="justify-content-end">
-                        Product
+                        Attribute
                     </h2>
                 </div>
                 {{-- End Of Card Header --}}
@@ -49,8 +49,8 @@
                         </div>
 
                         <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
-                        <div id="product-search">
-                            @include('admins.products.search')
+                        <div id="attribute-search">
+                            @include('admins.attributes.search')
                         </div>
 
                     </div>
@@ -63,5 +63,5 @@
     </div>
 @endsection
 @push('script')
-      <script src="{{ asset('assets/js/apps/product.js') }}"></script>
+      <script src="{{ asset('assets/js/apps/attributes.js') }}"></script>
 @endpush

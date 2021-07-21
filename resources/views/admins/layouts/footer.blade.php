@@ -47,10 +47,7 @@
         <script>
 
             $(function(){
-
-                // declare token
-                const TOKEN = $('meta[name="csrf-token"]').attr('content');
-
+                const TOKEN = $('meta[name="csrf-token"]').attr("content");
                 // set ajax
                 $.ajaxSetup({
                     headers: {

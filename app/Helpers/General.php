@@ -175,4 +175,20 @@ class General
 
 		return $showAttributes;
 	}
+
+    /**
+     * @param array
+     * @return array
+     * this for sanitize input string
+     * 
+     */
+    public static function sanitasiInputString($data)
+    {
+        $tempData = [];
+        foreach($data as $key => $row)
+        {
+            $tempData[$key] = filter_var(htmlspecialchars(strtolower($row), ENT_QUOTES, "UTF-8"), FILTER_SANITIZE_STRING);
+        }
+        return $tempData;
+    }
 }

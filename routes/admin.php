@@ -52,10 +52,17 @@ Route::group(['middleware' => 'auth'], function() {
          * this route for attribute
          */
         // use resource for base template route
-        Route::resource('attribute', 'AttributeController');
         Route::group(['prefix' => 'attribute'], function() {
+            Route::get('/', ['as' => 'index.attribute', 'uses' => 'AttributeController@index']);
+            Route::get('search', ['as' => 'search.attribute', 'uses' => 'AttributeController@search']);
+            Route::get('create', ['as' => 'create.attribute', 'uses' => 'AttributeController@create']);
+            Route::get('{attributeId}', ['as' => 'show.attribute', 
+                'uses' => 'AttributeController@show']);
+            Route::get('{attributeId}/options', ['as' => 'options.attribute', 
+                'uses' => 'AttributeController@options']);
             
         });
+        // Route::resource('attribute', 'AttributeController');
 
     });
 
