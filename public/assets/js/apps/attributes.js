@@ -1,6 +1,9 @@
 $(() => {
     // select2
-    $(".js-example-basic-single").select2();
+    $(".js-example-basic-single").select2({
+        placeholder: "Select an option",
+        allowClear: true,
+    });
 
     const TOKEN = $('meta[name="csrf-token"]').attr("content");
 
@@ -66,28 +69,11 @@ $(() => {
         fetchDataSearch(page, keyword, size);
     });
 
-    // Fetch All Data
-    function getAllData() {
-        $.ajax({
-            method: "GET",
-            url: "/admin/master/attribute/search",
-            success: function (data) {
-                NProgress.done();
-                $("#attribute-search").html("");
-                $("#attribute-search").html(data);
-            },
-            error: function (jqXHR, error, errorThrown) {
-                if (jqXHR.status && jqXHR.status == 400) {
-                    toastr.error(jqXHR.responseText);
-                } else {
-                    toastr.error("Something Went Wrong");
-                }
-            },
-        });
-    }
-
     // Function Delete Data Attribute
     function deleteData(id) {
+        let keyword = $("#keyword").val();
+        let page = $("#hidden_page").val();
+        let size = $("#size").val();
         $.ajax({
             type: "DELETE",
             url: "attribute/" + id,
@@ -98,7 +84,7 @@ $(() => {
             },
             success: function (result) {
                 toastr.success("Data has been deleted");
-                getAllData();
+                fetchDataSearch(page, keyword, size);
             },
             error: function (jqXHR, error, errorThrown) {
                 if (jqXHR.status && jqXHR.status == 400) {

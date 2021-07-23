@@ -56,13 +56,17 @@ Route::group(['middleware' => 'auth'], function() {
             Route::get('/', ['as' => 'index.attribute', 'uses' => 'AttributeController@index']);
             Route::get('search', ['as' => 'search.attribute', 'uses' => 'AttributeController@search']);
             Route::get('create', ['as' => 'create.attribute', 'uses' => 'AttributeController@create']);
+            Route::post('/', ['as' => 'post.data.attribute', 'uses' => 'AttributeController@store']);
             Route::get('{attributeId}', ['as' => 'show.attribute', 
                 'uses' => 'AttributeController@show']);
             Route::get('{attributeId}/options', ['as' => 'options.attribute', 
                 'uses' => 'AttributeController@options']);
+            Route::put('{attributeId}', ['as' => 'update.attribute', 
+                'uses' => 'AttributeController@update']);
+            Route::put('{attributeId}', ['as' => 'delete.attribute', 
+                'uses' => 'AttributeController@destroy']);
             
         });
-        // Route::resource('attribute', 'AttributeController');
 
     });
 

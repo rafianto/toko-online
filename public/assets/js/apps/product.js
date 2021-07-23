@@ -60,22 +60,12 @@ $(document).on("click", ".pagination a", function (event) {
     fetchDataSearch(page, keyword, size);
 });
 
-// Fetch All Data
-function getAllData() {
-    $.ajax({
-        method: "GET",
-        url: "/admin/master/product/search",
-        success: function (data) {
-            NProgress.done();
-            $("#product-search").html("");
-            $("#product-search").html(data);
-        },
-    });
-}
-
 // Function Delete Data Customer
 function deleteData(id) {
     const TOKEN = $('meta[name="csrf-token"]').attr("content");
+    let keyword = $("#keyword").val();
+    let page = $("#hidden_page").val();
+    let size = $("#size").val();
     $.ajax({
         type: "DELETE",
         url: "product/" + id,
@@ -86,7 +76,7 @@ function deleteData(id) {
         },
         success: function (result) {
             toastr.success("Data has been deleted");
-            getAllData();
+            fetchDataSearch(page, keyword, size);
         },
         error: function (jqXHR, error, errorThrown) {
             if (jqXHR.status && jqXHR.status == 400) {

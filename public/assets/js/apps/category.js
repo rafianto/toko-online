@@ -58,21 +58,11 @@ $(document).on("click", ".pagination a", function (event) {
     fetchDataSearch(page, keyword, size);
 });
 
-// Fetch All Data
-function getAllData() {
-    $.ajax({
-        method: "GET",
-        url: "/admin/master/category/search",
-        success: function (data) {
-            NProgress.done();
-            $("#category-search").html("");
-            $("#category-search").html(data);
-        },
-    });
-}
-
 // Function Delete Data Customer
 function deleteData(id) {
+    let keyword = $("#keyword").val();
+    let page = $("#hidden_page").val();
+    let size = $("#size").val();
     $.ajax({
         type: "DELETE",
         url: "category/" + id,
@@ -83,7 +73,7 @@ function deleteData(id) {
         },
         success: function (result) {
             toastr.success("Data has been deleted");
-            getAllData();
+            fetchDataSearch(page, keyword, size);
         },
         error: function (jqXHR, error, errorThrown) {
             if (jqXHR.status && jqXHR.status == 400) {

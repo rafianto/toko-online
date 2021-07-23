@@ -35,12 +35,12 @@ class Category extends Model
     public function getAllData($keyword = null, $size = 10)
     {
         $categories = $this->where('id', 'like', '%' . (int)$keyword . '%')
-                    ->orWhere('name', 'like', '%' . $keyword . '%')
-                    ->orWhere('slug', 'like', '%' . $keyword . '%')
-                    ->orWhere('created_at', 'like', '%' . $keyword . '%')
-                    ->orWhere('updated_at', 'like', '%' . $keyword . '%')
-                    ->orderBy('name', 'ASC')
-                    ->paginate((int) $size);
+        ->orWhere('name', 'like', '%' . $keyword . '%')
+        ->orWhere('slug', 'like', '%' . $keyword . '%')
+        ->orWhere('created_at', 'like', '%' . $keyword . '%')
+        ->orWhere('updated_at', 'like', '%' . $keyword . '%')
+        ->orderBy('name', 'ASC')
+        ->paginate((int) $size);
         return $categories;
     }
 }

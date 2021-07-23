@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\General;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AttributeRequest;
 use App\Models\Attribute;
 use App\Models\AttributeOption;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AttributeController extends Controller
 {
@@ -15,6 +17,9 @@ class AttributeController extends Controller
     public function __construct()
     {
         $this->attribute = new Attribute();
+        $this->data['types'] = $this->attribute->types();
+        $this->data['booleanOptions'] = $this->attribute->booleanOptions();
+        $this->data['validations'] = $this->attribute->validations();
     }
 
     /**
@@ -46,9 +51,7 @@ class AttributeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        $this->data['types'] = $this->attribute->types();
-        
+    {        
         return view('admins.attributes.create', $this->data);
     }
 
@@ -58,9 +61,31 @@ class AttributeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AttributeRequest $request)
     {
-        //
+        $filter = General::sanitasiInputString($request->except('_token', "_method"));
+        // make boolen
+        $filter['is_required'] = (boolean) $filter['is_required'];
+        $filter['is_unique'] = (boolean) $filter['is_unique'];
+        $filter['validation'] = (boolean) $filter['validation'];
+        $filter['is_configurable'] = (boolean) $filter['is_configurable'];
+        $filter['is_filterable'] = (boolean) $filter['is_filterable'];
+        
+        // save data attribute
+        $saveAttribute = false;
+        $saveAttribute = DB::transaction(function() use($filter) {
+            Attribute::create($filter);
+            return true;
+        });
+        
+        // cek gagal save attribute
+        if(!$saveAttribute)
+        {
+            return redirect()->back()->with(['error' => 'Failed to saved attribute.']);
+        }
+
+        return redirect("admin/master/attribute")
+            ->with(['message' => 'Data attribute has been saved.']);
     }
 
     /**
@@ -71,7 +96,9 @@ class AttributeController extends Controller
      */
     public function show($id)
     {
-        //
+        $this->data['attribute'] = $this->attribute->findOrFail($id);
+        
+        return view('admins.attributes.edit', $this->data);
     }
 
     /**
