@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 class CreateCategoriesTable extends Migration
 {
     /**
@@ -19,6 +20,7 @@ class CreateCategoriesTable extends Migration
             $table->string('slug')->nullable($value = false);
             $table->bigInteger('parent_id')->nullable($value = null)->default(0);
             $table->timestamps();
+            $table->softDeletes();
             $table->index('parent_id');
         });
     }

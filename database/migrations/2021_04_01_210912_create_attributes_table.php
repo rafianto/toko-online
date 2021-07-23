@@ -18,7 +18,7 @@ class CreateAttributesTable extends Migration
             $table->string('code')->unique();
             $table->string('name');
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable($value = true)->default(null);
+            $table->softDeletes();
             $table->index('code');
         });
     }

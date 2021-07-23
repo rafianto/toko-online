@@ -29,7 +29,7 @@ class CreateProductsTable extends Migration
             $table->text('description')->nullable($value = true);
             $table->integer('status');
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable($value = true)->default(null);
+            $table->softDeletes();
             $table->index(['sku', 'slug']);
         });
     }

@@ -19,6 +19,7 @@ class CreateAttributeOptionsTable extends Migration
             $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
             $table->string('name');
             $table->timestamps();
+            $table->softDeletes();
             $table->index(['attribute_id', 'name']);
         });
     }
