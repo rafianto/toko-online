@@ -56,15 +56,33 @@ Route::group(['middleware' => 'auth'], function() {
             Route::get('/', ['as' => 'index.attribute', 'uses' => 'AttributeController@index']);
             Route::get('search', ['as' => 'search.attribute', 'uses' => 'AttributeController@search']);
             Route::get('create', ['as' => 'create.attribute', 'uses' => 'AttributeController@create']);
-            Route::post('/', ['as' => 'post.data.attribute', 'uses' => 'AttributeController@store']);
             Route::get('{attributeId}', ['as' => 'show.attribute', 
                 'uses' => 'AttributeController@show']);
-            Route::get('{attributeId}/options', ['as' => 'options.attribute', 
-                'uses' => 'AttributeController@options']);
-            Route::put('{attributeId}', ['as' => 'update.attribute', 
+            Route::post('/', ['as' => 'post.data.attribute', 'uses' => 'AttributeController@store']);
+            
+            Route::put('{id}', ['as' => 'update.attribute', 
                 'uses' => 'AttributeController@update']);
-            Route::put('{attributeId}', ['as' => 'delete.attribute', 
+            Route::delete('{attributeId}', ['as' => 'delete.attribute', 
                 'uses' => 'AttributeController@destroy']);
+            
+            // route group for attributeId/option view
+            Route::group(['prefix' => '{attributeId}/options'], function(){
+
+                Route::get('/', ['as' => 'options.attribute.index', 
+                    'uses' => 'AttributeController@options']);
+                Route::get('/add-option', ['as' => 'option.attribute.create',
+                    'uses' => 'AttributeController@createOptions']);
+                    
+            });
+
+            // route group option
+            Route::group(['prefix' => 'options'], function() {
+                Route::post('/', ['as' => 'option.attribute.store',
+                    'uses' => 'AttributeController@storeOptions']);
+                Route::delete('{optionId}', ['as' => 'option.attribute.delete',
+                    'uses' => 'AttributeController@destroyOptions']);
+
+            });
             
         });
 

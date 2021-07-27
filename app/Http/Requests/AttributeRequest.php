@@ -28,8 +28,8 @@ class AttributeRequest extends FormRequest
             $code = "required|unique:attributes,code," . $this->get('id');
             $name = "required|unique:attributes,name," . $this->get('id');
         } else {
-            $code = "required|unique:attributes,code,";
-            $name = "required|unique:attributes,name,";
+            $code = "required|unique:attributes,code,NULL";
+            $name = "required|unique:attributes,name,NULL";
         }
         return [
             "code" =>$code,

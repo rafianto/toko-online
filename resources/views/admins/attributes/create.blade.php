@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-    <div class="col-sm-8 col-md-8">
+    <div class="col-sm-12 col-md-12">
 
         <div class="card card-default">
 
@@ -20,7 +20,7 @@
 
                     {{-- form --}}
                         <div class="row">
-                            <div class="col-md-12 col-lg-12">
+                            <div class="col-md-8 col-lg-8">
 
                                 <form action="{{ route('post.data.attribute') }}" method="post">
                                     @csrf

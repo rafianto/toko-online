@@ -1,8 +1,8 @@
 @extends('admins.layouts.main')
-@section('title', "New Attribute")
+@section('title', "Edit Attribute")
 @section('content')
 <div class="row">
-    <div class="col-sm-8 col-md-8">
+    <div class="col-sm-12 col-md-12">
 
         <div class="card card-default">
 
@@ -19,12 +19,12 @@
 
                     {{-- form --}}
                         <div class="row">
-                            <div class="col-md-12 col-lg-12">
+                            <div class="col-md-8 col-lg-8">
 
-                                <form action="{{ route('post.data.attribute', ['attributeId' => $attribute->id]) }}" method="post">
+                                <form action="{{ route('update.attribute', ['id' => $attribute->id]) }}" method="post">
                                     @csrf
                                     @method('PUT')
-                                    <input type="hidden" value="{{ $attribute->id }}">
+                                    <input type="hidden" value="{{ $attribute->id }}" name="id">
                                     
                                     {{-- Fieldset Generals --}}
                                     <fieldset class="form-group">
@@ -38,12 +38,13 @@
                                                     is-invalid
                                                 @enderror" id="code"
                                                 name="code" value="{{ $attribute->code }}"
-                                                autocomplete="off" autofocus
+                                                autocomplete="off" 
+                                                readonly
                                             >
+                                            @error('code')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
-                                        @error('code')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
 
                                         <div class="form-group">
                                             <label for="name">
@@ -59,10 +60,10 @@
                                                     autofocus
                                                 @enderror
                                             >
+                                            @error('name')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
-                                        @error('name')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
 
                                         <div class="mb-5 form-group">
                                             <label for="type">
@@ -85,6 +86,9 @@
                                                     </option>
                                                 @endforeach
                                             </select>
+                                            @error('type')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
                                     </fieldset>

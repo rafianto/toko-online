@@ -17,7 +17,7 @@
                               </h1>
 
                               <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb p-0">
+                                    <ol class="p-0 breadcrumb">
                                           <li class="breadcrumb-item">
                                           <a href="{{ url('admin/') }}">
                                           <span class="mdi mdi-home"></span>
@@ -45,8 +45,8 @@
                   </div>
 
                   {{-- Footer --}}
-                        <footer class="footer mt-auto">
-                              <div class="copyright bg-white">
+                        <footer class="mt-auto footer">
+                              <div class="bg-white copyright">
                                     <p>
                                     &copy; <span id="copy-year">2019</span> Copyright {{ env('APP_NAME') }} By
                                     <a

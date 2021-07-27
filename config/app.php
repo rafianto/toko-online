@@ -232,7 +232,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         "General" => App\Helpers\General::class,
-
+        "CollectionPaginate" => App\Helpers\CollectionPaginate::class,
     ],
 
 ];

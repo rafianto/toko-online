@@ -83,15 +83,19 @@ $(() => {
                 id: id,
             },
             success: function (result) {
-                toastr.success("Data has been deleted");
-                fetchDataSearch(page, keyword, size);
+                if (result.error) {
+                    toastr.success(result.message);
+                } else {
+                    toastr.success(result.message);
+                    fetchDataSearch(page, keyword, size);
+                }
             },
             error: function (jqXHR, error, errorThrown) {
                 if (jqXHR.status && jqXHR.status == 400) {
                     toastr.error(jqXHR.responseText);
-                } else {
-                    toastr.error("Something Went Wrong");
+                    return false;
                 }
+                toastr.error("Something Went Wrong");
             },
         });
     }

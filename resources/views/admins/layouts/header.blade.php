@@ -82,6 +82,7 @@
         class="header-fixed sidebar-fixed sidebar-dark header-light"
         id="body"
       >
+      
       <script>
             NProgress.configure({ showSpinner: true });
             NProgress.start();
