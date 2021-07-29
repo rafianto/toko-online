@@ -205,12 +205,16 @@ class AttributeController extends Controller
     }
     
     /**
-     * @param int attributeId
-     * for view attribute option
+     * @param Request $request
+     * for view search attribute option
      */
-    public function createOptions($attributeId)
+    public function searchOptions(Request $request, $attributeId)
     {
-
+        $this->data['attribute'] = $this->attribute->findOrFail($attributeId);
+        $this->data['options'] = CollectionPaginate::paginate(
+            $this->data['attribute']->attributeOptions, 2
+        );
+        return view("admins.attribute_options.search", $this->data)->render();
     }
 
     /**
@@ -251,6 +255,23 @@ class AttributeController extends Controller
 
     public function destroyOptions($optionId)
     {
-        dd($optionId);
+        $option = AttributeOption::findOrFail($optionId);
+        if(is_null($option))
+        {
+            return response()->json([
+                "message" => "Something went wrong.Couldn't delete data. Please try again later."
+            ], 404);
+        }
+        
+        $delete = $option->delete();
+        if(!$delete)
+        {
+            return response()->json([
+                "message" => "Something went wrong.Couldn't delete data. Please try again later."
+            ], 500);
+        }
+        return response()->json([
+            "message" => "Data has been deleted."
+        ], 200);
     }
 }

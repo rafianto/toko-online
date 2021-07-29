@@ -63,102 +63,10 @@
 
                 <div class="mb-5">
 
-                    {{-- Content Table --}}
-                        <div class="table-responsive responsive-data-table">
-
-                            <table id="categories-table" 
-                                class="table table-striped table-hover table-bordered dt-responsive text-wrap "
-                            >
-
-                                {{-- Thead --}}
-                                    <thead class="text-center">
-                                        <tr>
-                                            <th class="text-center">
-                                                No
-                                            </th>
-                                            <th class="text-center">
-                                                Name
-                                            </th>
-                                            <th class="text-center">
-                                                Created At
-                                            </th class="text-center">
-                                            <th class="text-center">
-                                                Updated At
-                                            </th>
-                                            <th class="text-center">
-                                                        #
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                {{-- End Of Thead --}}
-
-                                {{-- Tbody --}}
-                                    <tbody>
-
-                                    {{-- Jika Data option Kosong --}}
-                                    @if(count($options) == 0)
-                                        <tr  class="text-center">
-                                            <td colspan="6">
-                                                No Data Found
-                                            </td>
-                                        </tr>
-                                    @endif
-                                    {{-- akhir kondisi --}}
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                    @foreach ($options as $index => $option)
-
-                                        <tr class="text-dark text-wrap">
-                                            <td class="text-center">
-                                                {{ $index + $i }}
-                                            </td>
-                                            <td>
-                                                {{ ucwords($option->name) }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ date('d/m/Y H:i:s' , strtotime($option->created_at)) }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ date('d/m/Y H:i:s' , strtotime($option->updated_at)) }}
-                                            </td>
-                                            <td class="text-center" width="20%">
-                                                <button type="button"
-                                                    id="btn-view" data-id="{{ $option->id }}" 
-                                                    class="my-2 btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="View Data"
-                                                    onclick="viewData({{ $option->id }}, `{{ ucwords($option->name) }}`)"
-                                                >
-                                                    <i class="text-white mdi mdi-eye"></i>
-                                                </button>
-                                                <button id="btn-delete" data-id="{{ $option->id }}" class="my-2 btn btn-danger btn-sm" data-attributeId="{{ $attribute->id }}" data-toggle="tooltip" data-placement="top" title="Delete Data">
-                                                    <i class="text-white mdi mdi-delete"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        
-                                    @endforeach
-
-                                    </tbody>
-                                {{-- End Of Tbody --}}
-
-                            </table>
-
-                            </div>
-
-                            <span>
-                                    Total Data:&nbsp;<b>{{ $options->total() }}</b>
-                            </span>
-                        </div>
-                        {{-- End Of Content Table --}}
-
-
-                        {{-- Pagination --}}
-                            <div class="my-3 row justify-content-end">
-                                    <div>
-                                            {{ $options->links('vendor.pagination.bootstrap-4') }}
-                                    </div>
-                            </div>
-                        {{-- End Of Pagination --}}
+                    <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
+                    <div id="attributeOptions-search">
+                        @include('admins.attribute_options.search')
+                    </div>
 
                 </div>
 

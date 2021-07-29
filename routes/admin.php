@@ -70,6 +70,8 @@ Route::group(['middleware' => 'auth'], function() {
 
                 Route::get('/', ['as' => 'options.attribute.index', 
                     'uses' => 'AttributeController@options']);
+                Route::get("search", ['as' => 'search.options.attribute', 
+                    'uses' => 'AttributeController@searchOptions']);
                 Route::get('/add-option', ['as' => 'option.attribute.create',
                     'uses' => 'AttributeController@createOptions']);
                     
